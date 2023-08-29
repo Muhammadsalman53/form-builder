@@ -17,7 +17,7 @@
 
                         <div class="form-outline mb-4">
                             <input type="email" id="form3Example3" class="form-control form-control-lg"
-                                placeholder="Enter username" v-model="email" name="email" />
+                                placeholder="Enter email" v-model="email" name="email" />
                         </div>
 
 
@@ -36,7 +36,7 @@
                             </div>
                             <a href="#!" class="reg-link">Forgot password?</a>
                         </div>
-                        <p class="text-danger mt-2" v-if="invalidLogin">Incorrect username or password. Please try again.
+                        <p class="text-danger mt-2" v-if="invalidLogin">Incorrect email or password. Please try again.
                         </p>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
@@ -55,43 +55,61 @@
     </div>
 </template>
 <script>
+import { ref } from "vue";
 import axios from "axios";
+
 export default {
     name: 'Login',
-    data() {
-        return {
-            email: null,
-            password: null,
-            invalidLogin: false,
-        };
-    },
+    setup() {
+        const email = ref('');
+        const password = ref('');
+        const invalidLogin = ref(false);
 
-    methods: {
-        loginUser() {
-            this.$router.push('/admin/dashboard')
-            // axios
-            //     .post("https://dummyjson.com/auth/login", {
-            //         username: this.email,
-            //         password: this.password,
-            //     })
-            //     .then((response) => {
-            //         console.log();
-            //         if (response.data) {
-            //             console.log("Login successful:", response.data);
-            //             localStorage.setItem("token", response.data.token);
-            //             this.$router.push({ name: "home" });
-            //         } else {
-            //             console.log("Login failed:", response.data.message);
-            //         }
-            //     })
-            //     .catch((err) => {
-            //         this.invalidLogin = !this.invalidLogin;
-            //         console.log(err);
-            //     });
-        },
+        const loginUser = () => {
+            axios
+                .post("https://a857-182-176-157-31.ngrok-free.app/login", {
+                    username: email.value,
+                    password: password.value,
+                })
+                .then((response) => {
+                    if (response.data) {
+                        console.log("Login successful:", response.data);
+                        localStorage.setItem("token", response.data.token);
+
+                        // Set the user's role in localStorage
+                        localStorage.setItem("userRole", response.data.role);
+
+                        // Redirect based on the user's role
+                        if (response.data.role === "admin") {
+                            // Redirect to admin dashboard
+                            router.push("/admin/dashboard");
+                        } else if (response.data.role === "user") {
+                            // Redirect to user dashboard
+                            router.push("/user/dashboard");
+                        }
+
+                    } else {
+                        console.log("Login failed:", response.data.message);
+                        invalidLogin.value = true;
+                    }
+                })
+                .catch((err) => {
+                    invalidLogin.value = true;
+                    console.log(err);
+                });
+        };
+
+        return {
+            email,
+            password,
+            invalidLogin,
+            loginUser,
+        };
     },
 };
 </script>
+
+
 
 <style scoped>
 .login-btn {
@@ -109,6 +127,4 @@ export default {
 .reg-link:hover {
     color: #CD853F;
 }
-
-
 </style>

@@ -13,22 +13,21 @@ const router = createRouter({
     {
       path: "/",
       redirect: "/login", // Redirect to login page by default
-      component: Login
     },
     {
       path: "/login",
-      component: Login, // Your login component
-       meta: { requiresGuest: true }, // Only accessible to unauthenticated users
+      component: Login,
+      meta: { requiresGuest: true }, // Only accessible to unauthenticated users
     },
     {
       path: "/signup",
-      component: Register, // Your login component
-       meta: { requiresGuest: true }, // Only accessible to unauthenticated users
+      component: Register,
+      meta: { requiresGuest: true }, // Only accessible to unauthenticated users
     },
     {
       path: "/admin",
       component: AdminLayout,
-       meta: { role: "admin" }, // Set the default role for admin
+      meta: { role: "admin" }, // Set the default role for admin
       children: [
         {
           path: "dashboard",
@@ -39,7 +38,7 @@ const router = createRouter({
     {
       path: "/user",
       component: UserLayout,
-       meta: { role: "user" }, // Set the default role for user
+      meta: { role: "user" }, // Set the default role for user
       children: [
         {
           path: "dashboard",
@@ -50,27 +49,25 @@ const router = createRouter({
   ],
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (
-//     to.matched.some((record) => record.meta.requiresGuest)
-//   ) {
-//     next({ path: "/" }); // Redirect authenticated users from login page
-//   } else if (to.matched.some((record) => record.meta.role)) {
-//     // Check if user role matches the route's required role
-//     if (userRole === to.meta.role) {
-//       next(); // Allow access
-//     } else {
-//       next({ path: "/" }); // Redirect unauthorized users
-//     }
-//   } else {
-//     next(); // Allow access to other routes
-//   }
-// });
-export default router;
+router.beforeEach((to, from, next) => {
+  const userRole = localStorage.getItem("userRole"); // Assuming you store user role in localStorage
 
-// After Login
-// if (userRole === "admin") {
-//   router.push({ path: "/admin/dashboard" });
-// } else if (userRole === "user") {
-//   router.push({ path: "/user/dashboard" });
-// }
+  if (to.matched.some((record) => record.meta.requiresGuest)) {
+    if (userRole) {
+      next({ path: userRole === "admin" ? "/admin/dashboard" : "/user/dashboard" });
+    } else {
+      next(); // Allow access to login or signup for unauthenticated users
+    }
+  } else if (to.matched.some((record) => record.meta.role)) {
+    if (userRole === to.meta.role) {
+      next(); // Allow access
+    } else {
+      next({ path: "/" }); // Redirect unauthorized users
+    }
+  } else {
+    next(); // Allow access to other routes
+  }
+});
+
+
+export default router;

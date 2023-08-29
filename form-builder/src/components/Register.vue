@@ -109,10 +109,10 @@ import axios from "axios";
 
 export default {
   setup() {
-    const name = ref("maaz");
-    const email = ref("Maaz@gmail.com");
-    const password = ref("maaz5467");
-    const phone = ref("075769573");
+    const name = ref("");
+    const email = ref("");
+    const password = ref("");
+    const phone = ref("");
 
     const signUpUser = () => {
       const formData = new FormData();
