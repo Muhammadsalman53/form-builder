@@ -23,7 +23,7 @@ const router = createRouter({
     {
       path: "/signup",
       component: Register, // Your login component
-      //  meta: { requiresGuest: true }, // Only accessible to unauthenticated users
+       meta: { requiresGuest: true }, // Only accessible to unauthenticated users
     },
     {
       path: "/admin",
