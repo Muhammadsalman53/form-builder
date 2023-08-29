@@ -1,20 +1,20 @@
 <template>
   <div>
-    <header>
-      <!-- User Header -->
-      User layout header
-    </header>
+    <Header />
     <router-view />
     <!-- User-specific views will be loaded here -->
-    <footer>
-      <!-- User Footer -->
-      User layout Footer
-    </footer>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Header from './Header.vue';
+import Footer from './Footer.vue';
 export default{
   name: 'UserLayout',
+  components: {
+    Header,
+    Footer
+  }
 }
 </script>

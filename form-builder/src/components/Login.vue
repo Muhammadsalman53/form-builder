@@ -4,7 +4,7 @@
             <div class="row g-0 d-flex justify-content-center align-items-center">
 
                 <div class="col-md-9 col-lg-6 col-xl-5 d-none d-sm-block p-3">
-                    <img src="../assets/login-bg.png" class="img-fluid" alt="Sample image">
+                    <img src="../assets/images/E-Commerce-PNG-Clipart-Background.png" class="img-fluid" alt="Sample image">
                 </div>
 
                 <div class="col-md-9 col-lg-6 col-xl-4 offset-xl-1 px-md-4 py-5">
@@ -17,13 +17,13 @@
 
                         <div class="form-outline mb-4">
                             <input type="email" id="form3Example3" class="form-control form-control-lg"
-                                placeholder="Enter username" v-model="email" />
+                                placeholder="Enter username" v-model="email" name="email" />
                         </div>
 
 
                         <div class="form-outline mb-3">
                             <input type="password" id="form3Example4" class="form-control form-control-lg"
-                                placeholder="Enter password" v-model="password" />
+                                placeholder="Enter password" v-model="password" name="password" />
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">

@@ -11,28 +11,28 @@
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <div class="form-outline flex-fill mb-0">
                                         <input type="text" id="form3Example1c" class="form-control"
-                                            placeholder="Enter your fullname" />
+                                            placeholder="Enter your fullname" name="name" />
                                     </div>
                                 </div>
 
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <div class="form-outline flex-fill mb-0">
                                         <input type="email" id="form3Example3c" class="form-control"
-                                            placeholder="Enter your valid email" />
+                                            placeholder="Enter your valid email" name="email" />
                                     </div>
                                 </div>
 
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <div class="form-outline flex-fill mb-0">
                                         <input type="password" id="form3Example4c" class="form-control"
-                                            placeholder="Enter your password" />
+                                            placeholder="Enter your password" name="password" />
                                     </div>
                                 </div>
 
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <div class="form-outline flex-fill mb-0">
                                         <input type="password" id="form3Example4cd" class="form-control"
-                                            placeholder="Enter password again" />
+                                            placeholder="Enter You PhoneNumber" name="phone" />
                                     </div>
                                 </div>
 
@@ -52,7 +52,7 @@
                         </div>
                         <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                            <img src="../assets/signup-bg.png" class="img-fluid" alt="sign up background">
+                            <img src="../assets/images/E-Commerce-Shopping-Transparent-Background.png" class="img-fluid" alt="sign up background">
 
                         </div>
                     </div>

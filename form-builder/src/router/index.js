@@ -4,7 +4,7 @@ import UserLayout from "../components/UserLayout.vue";
 import AdminDashboard from "../views/AdminDashboard.vue";
 import UserDashboard from "../views/UserDashboard.vue";
 import Login from '../components/Login.vue';
-import Register from '../components/Login.vue';
+import Register from '../components/Register.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

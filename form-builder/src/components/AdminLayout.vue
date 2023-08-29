@@ -1,15 +1,10 @@
 <template>
   <div>
-    <header>
-      <!-- Admin Header -->
       <Header />
-    </header>
     <router-view />
     <!-- Admin-specific views will be loaded here -->
-    <footer>
-      <!-- Admin Footer -->
+
       <Footer />
-    </footer>
   </div>
 </template>
 
