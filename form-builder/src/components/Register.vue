@@ -122,10 +122,7 @@ export default {
       formData.append("phone", phone.value);
 
       // Log the FormData object before sending the request
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
-      }
-
+    //   n
       axios
         .post("https://a857-182-176-157-31.ngrok-free.app/register", formData)
         .then((response) => {
