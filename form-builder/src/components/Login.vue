@@ -57,6 +57,7 @@
 <script>
 import { ref } from "vue";
 import axios from "axios";
+import router from "../router";
 
 export default {
     name: 'Login',
@@ -74,19 +75,22 @@ export default {
                 .then((response) => {
                     if (response.data) {
                         console.log("Login successful:", response.data);
-                        localStorage.setItem("token", response.data.token);
+                        router.push('/admin/dasboard')
+                        // localStorage.setItem("token", response.data.token);
 
-                        // Set the user's role in localStorage
-                        localStorage.setItem("userRole", response.data.role);
+                        // // Set the user's role in localStorage
+                        // localStorage.setItem("userRole", response.data.role);
 
-                        // Redirect based on the user's role
-                        if (response.data.role === "admin") {
-                            // Redirect to admin dashboard
-                            router.push("/admin/dashboard");
-                        } else if (response.data.role === "user") {
-                            // Redirect to user dashboard
-                            router.push("/user/dashboard");
-                        }
+                        // // Redirect based on the user's role
+                        // if (response.data.role === "admin") {
+                        //     console.log(response.data.role);
+                        //     // Redirect to admin dashboard
+                        //     router.push("/admin/dashboard");
+                        // } else if (response.data.role === "user") {
+                        //     // Redirect to user dashboard
+                        //     console.log(response.data.role);
+                        //     router.push("/user/dashboard");
+                        // }
 
                     } else {
                         console.log("Login failed:", response.data.message);
@@ -118,13 +122,15 @@ export default {
     background: #D2691E;
     border: none;
 }
+
 .login-btn:hover {
     background: #CD853F;
 }
+
 .reg-link {
     color: #D2691E;
 }
+
 .reg-link:hover {
     color: #CD853F;
-}
-</style>
+}</style>
