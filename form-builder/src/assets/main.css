@@ -26,4 +26,6 @@ footer{
       cursor: pointer;
       font-size: 1.004rem;
   }
-  
+  .dropdown-menu{
+    top: 93% !important;
+  }

@@ -10,7 +10,7 @@
 
       </button>
 
-      <a class="navbar-brand" href="#"><img src="../assets/images/form builder.webp"
+      <a class="navbar-brand" @click="gotToHome"><img src="../assets/images/form builder.webp"
           style="width: 70px; height: 70px;"></a>
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
@@ -63,8 +63,22 @@
     
     
 <script>
+import { useRouter } from 'vue-router';
 export default {
-  name: 'Header'
+  name: 'Header',
+  setup(){
+    const route = useRouter();
+    function logout() {
+      route.push("/");
+    }
+    function gotToHome(){
+      route.push("/login")
+    }
+    return {
+      logout,
+      gotToHome,
+    };
+  }
 }
 </script>
 

@@ -55,53 +55,56 @@
     </div>
 </template>
 
+
 <script>
 import axios from "axios";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
-    setup() {
-        const email = ref("");
-        const password = ref("");
-        const invalidLogin = ref(false);
+  setup() {
+    const router = useRouter();
+    const email = ref("");
+    const password = ref("");
+    const invalidLogin = ref(false);
 
-        const loginUser = () => {
-            const formData = new FormData();
-            formData.append("email", email.value);
-            formData.append("password", password.value);
+    const loginUser = () => {
+      const formData = new FormData();
+      formData.append("email", email.value);
+      formData.append("password", password.value);
 
-            axios
-                .post("https://010a-182-176-157-31.ngrok-free.app/api/login", formData)
-                .then((response) => {
-                    if (response.data) {
-                        console.log("Login successful. Role:", response.data);
+      axios
+        .post("https://010a-182-176-157-31.ngrok-free.app/api/login", formData)
+        .then((response) => {
+          if (response.data) {
+            console.log("Login successful. Role:", response.data);
 
-                        // Assuming the response contains a "role" property indicating admin or user
-                        if (response.data === "admin") {
-                            // Redirect to the admin dashboard
-                            this.$router.push("/admin/dashboard");
-                        } else if (response.data === "user") {
-                            // Redirect to the user dashboard
-                            this.$router.push("/user/dashboard");
-                        }
-                    } else {
-                        console.log("Login failed:", response.data.message);
-                        this.invalidLogin = true;
-                    }
-                })
+            // Assuming the response contains a "role" property indicating admin or user
+            if (response.data === "admin") {
+              // Redirect to the admin dashboard
+              router.push("/admin/dashboard");
+            } else if (response.data === "user") {
+              // Redirect to the user dashboard
+              router.push("/user/dashboard");
+            }
+          } else {
+            console.log("Login failed:", response.data.message);
+            invalidLogin.value = true;
+          }
+        })
+        .catch((err) => {
+          invalidLogin.value = true;
+          console.log(err);
+        });
+    };
 
-                .catch((err) => {
-                    this.invalidLogin = true;
-                    console.log(err);
-                });
-        };
-        return {
-            email,
-            password,
-            invalidLogin,
-            loginUser,
-        };
-    },
+    return {
+      email,
+      password,
+      invalidLogin,
+      loginUser,
+    };
+  },
 };
 </script>
 

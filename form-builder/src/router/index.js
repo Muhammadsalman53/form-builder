@@ -17,17 +17,17 @@ const router = createRouter({
     {
       path: "/login",
       component: Login,
-      // meta: { requiresGuest: true }, // Only accessible to unauthenticated users
+      meta: { requiresGuest: true },
     },
     {
       path: "/signup",
       component: Register,
-      // meta: { requiresGuest: true }, // Only accessible to unauthenticated users
+      meta: { requiresGuest: true },
     },
     {
       path: "/admin",
       component: AdminLayout,
-      // meta: { role: "admin" }, // Set the default role for admin
+      meta: { role: "admin" },
       children: [
         {
           path: "dashboard",
@@ -38,7 +38,7 @@ const router = createRouter({
     {
       path: "/user",
       component: UserLayout,
-      // meta: { role: "user" }, // Set the default role for user
+      meta: { role: "user" },
       children: [
         {
           path: "dashboard",
@@ -48,26 +48,5 @@ const router = createRouter({
     },
   ],
 });
-
-// router.beforeEach((to, from, next) => {
-//   const userRole = localStorage.getItem("userRole"); // Assuming you store user role in localStorage
-
-//   if (to.matched.some((record) => record.meta.requiresGuest)) {
-//     if (userRole) {
-//       next({ path: userRole === "admin" ? "/admin/dashboard" : "/user/dashboard" });
-//     } else {
-//       next(); // Allow access to login or signup for unauthenticated users
-//     }
-//   } else if (to.matched.some((record) => record.meta.role)) {
-//     if (userRole === to.meta.role) {
-//       next(); // Allow access
-//     } else {
-//       next({ path: "/" }); // Redirect unauthorized users
-//     }
-//   } else {
-//     next(); // Allow access to other routes
-//   }
-// });
-
 
 export default router;
