@@ -67,27 +67,26 @@ export default {
 
         const loginUser = () => {
             const formData = new FormData();
-            formData.append("username", email.value);
+            formData.append("email", email.value);
             formData.append("password", password.value);
 
             axios
-                .post("https://010a-182-176-157-31.ngrok-free.app/login", formData)
+                .post("https://010a-182-176-157-31.ngrok-free.app/api/login", formData)
                 .then((response) => {
-                    console.log(response.data.role);
-                    if (response.data && response.data.role) {
-                        console.log("Login successful. Role:", response.data.role);
+                    if (response.data) {
+                        console.log("Login successful. Role:", response.data);
 
                         // Assuming the response contains a "role" property indicating admin or user
-                //         if (response.data.role === "admin") {
-                //             // Redirect to the admin dashboard
-                //             this.$router.push("/admin/dashboard");
-                //         } else if (response.data.role === "user") {
-                //             // Redirect to the user dashboard
-                //             this.$router.push("/user/dashboard");
-                //         }
-                //     } else {
-                //         console.log("Login failed:", response.data.message);
-                //         this.invalidLogin = true;
+                        if (response.data === "admin") {
+                            // Redirect to the admin dashboard
+                            this.$router.push("/admin/dashboard");
+                        } else if (response.data === "user") {
+                            // Redirect to the user dashboard
+                            this.$router.push("/user/dashboard");
+                        }
+                    } else {
+                        console.log("Login failed:", response.data.message);
+                        this.invalidLogin = true;
                     }
                 })
 
