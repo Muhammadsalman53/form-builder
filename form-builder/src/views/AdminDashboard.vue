@@ -1,26 +1,64 @@
-<script setup>
+<script>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
+export default {
+  setup() {
+    const tableData = ref([]);
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://010a-182-176-157-31.ngrok-free.app/api/getdata');
+        
+        // Extract and parse data from the response
+        const extractedData = response.data.map(item => JSON.parse(item.data).data.user);
+
+        // Set the parsed data to the tableData
+        tableData.value = extractedData;
+        console.log(tableData.value);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    onMounted(() => {
+      fetchData();
+    });
+
+    return {
+      tableData,
+    };
+  },
+};
 </script>
 
+
 <template>
- <div class="container mt-5 mb-5">
-      <div class="card shadow">
-        <div class="card-body d-flex flex-column flex-md-row justify-content-between flex-wrap">
-          <div class="col-lg-3 col-md-3">
-          <h2 class="card-title">User Information</h2>
-        </div>
-          <div class="mb-3 mb-md-0 col-lg-3 col-md-3 ">
-            <p><strong>Name:</strong> John Doe</p>
-            <p><strong>Email:</strong> john@example.com</p>
-          </div>
-          <div class="col-lg-6 col-md-5 d-flex align-items-center justify-content-between mt-3">
-            <div class="col-lg-3 col-md-3"><button type="button" class="btn btn-success btn-lg">Accept</button></div>
-            <div class="col-lg-3 col-md-3"><button type="button" class="btn btn-warning btn-lg">Reject</button></div>
-            <div class="col-lg-3 col-md-3"><button type="button" class="btn btn-danger btn-lg">Delete</button></div>
-          </div>
-        </div>
-      </div>
+  <h1 class="text-center fw-bold" style="color: #ae62f8;">Admin Dashboard</h1>
+  <div class="container mt-5">
+    <div class="table-responsive">
+      <table class="table table-striped text-center table-hover shadow table-bordered">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th colspan="3">Actions</th>
+        </tr>
+        <tr v-for="item in tableData" :key="item.id">
+          <td>{{ item.name }}</td>
+          <td>{{ item.email }}</td>
+          <td>
+            <button type="button" class="btn btn-success">Accept</button>
+          </td>
+          <td><button type="button" class="btn btn-warning">Reject</button></td>
+          <td> <button type="button" class="btn btn-danger">Delete</button></td>
+        </tr>
+      </table>
     </div>
+  </div>
 </template>
 
 
+<style>
+/* Import Bootstrap CSS */
+@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
+</style>

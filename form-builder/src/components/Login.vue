@@ -54,55 +54,48 @@
         </div>
     </div>
 </template>
+
 <script>
-import { ref } from "vue";
 import axios from "axios";
-import router from "../router";
+import { ref } from "vue";
 
 export default {
-    name: 'Login',
     setup() {
-        const email = ref('');
-        const password = ref('');
+        const email = ref("");
+        const password = ref("");
         const invalidLogin = ref(false);
 
         const loginUser = () => {
+            const formData = new FormData();
+            formData.append("username", email.value);
+            formData.append("password", password.value);
+
             axios
-                .post("https://010a-182-176-157-31.ngrok-free.app/login", {
-                    username: email.value,
-                    password: password.value,
-                })
+                .post("https://010a-182-176-157-31.ngrok-free.app/login", formData)
                 .then((response) => {
-                    if (response.data) {
-                        console.log("Login successful:", response.data);
-                        router.push('/admin/dashboard');
-                        // localStorage.setItem("token", response.data.token);
+                    console.log(response.data.role);
+                    if (response.data && response.data.role) {
+                        console.log("Login successful. Role:", response.data.role);
 
-                        // // Set the user's role in localStorage
-                        // localStorage.setItem("userRole", response.data.role);
-
-                        // // Redirect based on the user's role
-                        // if (response.data.role === "admin") {
-                        //     console.log(response.data.role);
-                        //     // Redirect to admin dashboard
-                        //     router.push("/admin/dashboard");
-                        // } else if (response.data.role === "user") {
-                        //     // Redirect to user dashboard
-                        //     console.log(response.data.role);
-                        //     router.push("/user/dashboard");
-                        // }
-
-                    } else {
-                        console.log("Login failed:", response.data.message);
-                        invalidLogin.value = true;
+                        // Assuming the response contains a "role" property indicating admin or user
+                //         if (response.data.role === "admin") {
+                //             // Redirect to the admin dashboard
+                //             this.$router.push("/admin/dashboard");
+                //         } else if (response.data.role === "user") {
+                //             // Redirect to the user dashboard
+                //             this.$router.push("/user/dashboard");
+                //         }
+                //     } else {
+                //         console.log("Login failed:", response.data.message);
+                //         this.invalidLogin = true;
                     }
                 })
+
                 .catch((err) => {
-                    invalidLogin.value = true;
+                    this.invalidLogin = true;
                     console.log(err);
                 });
         };
-
         return {
             email,
             password,
@@ -112,6 +105,7 @@ export default {
     },
 };
 </script>
+
 
 
 
@@ -133,4 +127,5 @@ export default {
 
 .reg-link:hover {
     color: #CD853F;
-}</style>
+}
+</style>
