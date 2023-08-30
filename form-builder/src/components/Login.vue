@@ -68,14 +68,14 @@ export default {
 
         const loginUser = () => {
             axios
-                .post("https://a857-182-176-157-31.ngrok-free.app/login", {
+                .post("https://010a-182-176-157-31.ngrok-free.app/login", {
                     username: email.value,
                     password: password.value,
                 })
                 .then((response) => {
                     if (response.data) {
                         console.log("Login successful:", response.data);
-                        router.push('/admin/dasboard')
+                        router.push('/admin/dashboard');
                         // localStorage.setItem("token", response.data.token);
 
                         // // Set the user's role in localStorage

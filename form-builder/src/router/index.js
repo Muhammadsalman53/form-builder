@@ -27,7 +27,7 @@ const router = createRouter({
     {
       path: "/admin",
       component: AdminLayout,
-      meta: { role: "admin" }, // Set the default role for admin
+      // meta: { role: "admin" }, // Set the default role for admin
       children: [
         {
           path: "dashboard",
@@ -38,7 +38,7 @@ const router = createRouter({
     {
       path: "/user",
       component: UserLayout,
-      meta: { role: "user" }, // Set the default role for user
+      // meta: { role: "user" }, // Set the default role for user
       children: [
         {
           path: "dashboard",
