@@ -124,7 +124,7 @@ export default {
       // Log the FormData object before sending the request
     //   n
       axios
-        .post("https://010a-182-176-157-31.ngrok-free.app/register", formData)
+        .post("https://010a-182-176-157-31.ngrok-free.app/api/register", formData)
         .then((response) => {
           console.log(response.data);
           // if (response.data.success) {
