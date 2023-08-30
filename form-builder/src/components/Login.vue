@@ -18,6 +18,7 @@
                         <div class="form-outline mb-4">
                             <input type="email" id="form3Example3" class="form-control form-control-lg"
                                 placeholder="Enter email" v-model="email" name="email" />
+                                
                         </div>
 
 
@@ -63,7 +64,7 @@ import { useRouter } from "vue-router";
 
 export default {
   setup() {
-    const router = useRouter();
+    const route = useRouter();
     const email = ref("");
     const password = ref("");
     const invalidLogin = ref(false);
