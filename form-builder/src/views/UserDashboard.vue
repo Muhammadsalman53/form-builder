@@ -12,15 +12,22 @@ onMounted(() => {
 
 const showFormJSON = async () => {
   const formBuilder = $('.build-wrapp').data('formBuilder');
+  console.log(formBuilder);
   if (formBuilder) {
     const formData = formBuilder.actions.getData('json');
-    
+    console.log(formData);
+    const token = localStorage.getItem("token"); // Assuming "token" is stored in local storage
+    console.log(token);
+
     try {
       const response = await axios.post('https://98e7-182-176-157-31.ngrok-free.app/api/data', formData, {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Include the token in the Authorization header
         }
+        
       });
+
       console.log(response);
 
       if (response.status === 200) {
