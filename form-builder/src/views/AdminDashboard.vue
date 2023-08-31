@@ -1,27 +1,28 @@
 <script>
-import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { ref, onMounted } from 'vue';
 
 export default {
   setup() {
-    const tableData = ref([]);
+    const tableData = ref([]); // Define the tableData ref
+
+    const baseURL = 'https://98e7-182-176-157-31.ngrok-free.app/api/';
+    const token = localStorage.getItem('token');
+
+    const instance = axios.create({
+      baseURL,
+      headers: {
+        common: {
+          token,
+        }
+      }
+    });
 
     const fetchData = async () => {
       try {
-        const config = {
-          headers: {
-            'Custom-Header': 'YourHeaderValue', // Replace 'YourHeaderValue' with the actual header value you want to send
-          },
-        };
-
-        const response = await axios.get('https://98e7-182-176-157-31.ngrok-free.app/api/getdata', config);
-        
-        // Extract and parse data from the response
-        const extractedData = response.data.map(item => JSON.parse(item.data).data.user);
-
-        // Set the parsed data to the tableData
-        tableData.value = extractedData;
-        console.log(tableData.value);
+        const endpoint = 'getdata';
+        const response = await instance.get(endpoint);
+        tableData.value = response.data; // Update the tableData with the response
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -32,12 +33,11 @@ export default {
     });
 
     return {
-      tableData,
+      tableData, // Expose tableData to the template
     };
   },
 };
 </script>
-
 
 <template>
   <h1 class="text-center fw-bold" style="color: #ae62f8;">Admin Dashboard</h1>
@@ -62,7 +62,6 @@ export default {
     </div>
   </div>
 </template>
-
 
 <style>
 /* Import Bootstrap CSS */
