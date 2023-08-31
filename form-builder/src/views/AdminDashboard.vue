@@ -10,7 +10,7 @@ export default {
       try {
         const config = {
           headers: {
-            'Custom-Header': '*', // Replace 'YourHeaderValue' with the actual header value you want to send
+            'Custom-Header': 'YourHeaderValue', // Replace 'YourHeaderValue' with the actual header value you want to send
           },
         };
 

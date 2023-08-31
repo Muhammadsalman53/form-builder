@@ -69,6 +69,7 @@ export default {
   setup(){
     const route = useRouter();
     function logout() {
+      localStorage.removeItem("token");
       route.push("/");
     }
     function gotToHome(){

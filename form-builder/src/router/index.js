@@ -47,6 +47,19 @@ const router = createRouter({
       ],
     },
   ],
+  beforeEach: (to, from, next) => {
+    const token = localStorage.getItem("token");
+
+    if (to.meta.requiresAuth && !token) {
+      next('/login');
+    } else {
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
+      next();
+    }
+  },
+
 });
 
 export default router;

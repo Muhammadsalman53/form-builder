@@ -73,31 +73,28 @@ export default {
       const formData = new FormData();
       formData.append("email", email.value);
       formData.append("password", password.value);
-
+      
       axios
-        .post("https://98e7-182-176-157-31.ngrok-free.app/api/login", formData)
-        .then((response) => {
-          if (response.data) {
-            console.log("Login successful. Role:", response.data[0]);
-            // console.log(response.data[0]);
-
-            // Assuming the response contains a "role" property indicating admin or user
-            if (response.data[0] === "admin") {
-              // Redirect to the admin dashboard
-              router.push("/admin/dashboard");
-            } else if (response.data[0] === "user") {
-              // Redirect to the user dashboard
-              router.push("/user/dashboard");
-            }
-          } else {
-            console.log("Login failed:", response.data.message);
-            invalidLogin.value = true;
+      .post("https://98e7-182-176-157-31.ngrok-free.app/api/login", formData)
+      .then((response) => {
+        if (response.data && response.data.token) {
+          console.log("Login successful. Role:", response.data[0] );
+          // Store token in local storage
+          localStorage.setItem("token", response.data.token);
+          if (response.data[0] === "admin") {
+            router.push("/admin/dashboard");
+          } else if (response.data[0] === "user") {
+            router.push("/user/dashboard");
           }
-        })
-        .catch((err) => {
+        } else {
+          console.log("Login failed:", response.data.message);
           invalidLogin.value = true;
-          console.log(err);
-        });
+        }
+      })
+      .catch((err) => {
+        invalidLogin.value = true;
+        console.log(err);
+      });
     };
 
     return {
