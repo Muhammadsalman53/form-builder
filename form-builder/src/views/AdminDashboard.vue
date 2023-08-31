@@ -1,68 +1,167 @@
+<template>
+  <div>
+    <h1 class="text-center fw-bold" style="color: #ae62f8">Admin Dashboard</h1>
+    <div class="container mt-5">
+      <div class="table-responsive">
+        <table class="table table-striped text-center table-hover shadow table-bordered">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Users Actions</th>
+          </tr>
+          <tr v-for="item in userData" :key="item.id">
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td><button @click="DeleteItem(item)" type="button" class="btn btn-danger">Delete</button></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="container mt-5">
+      <div class="table-responsive">
+        <table class="table table-striped text-center table-hover shadow table-bordered">
+          <tr>
+            <th>UserID</th>
+            <th colspan="2">Forms Actions</th>
+          </tr>
+          <tr v-for="item in tableData" :key="item.id">
+            <td>{{ item.user_id }}</td>
+            <td>
+              <button @click="acceptItem(item)" type="button" class="btn btn-success">
+                Accept
+              </button>
+            </td>
+            <td>
+              <button @click="rejectItem(item.id)" type="button" class="btn btn-warning">
+                Reject
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script>
 import axios from "axios";
 import { ref, onMounted } from "vue";
 
 export default {
   setup() {
-    async function fetchData() {
+    const userData = ref([]);
+    const tableData = ref([]);
+
+    async function fetchUserData() {
+      const token = localStorage.getItem("token");
       try {
-        const url = "https://dded-182-176-157-31.ngrok-free.app/api/getdata"; // Make sure to include the correct endpoint
+        const url = "https://dded-182-176-157-31.ngrok-free.app/api/getuser";
         const response = await axios.get(url, {
           headers: {
-            // Use the "Authorization" header with the access token
-
             "Content-Type": "application/json",
-
             "ngrok-skip-browser-warning": "afsd",
+            "Authorization": `Bearer ${token}`,
           },
         });
-
-        console.log("Response:", response.data);
-
-        // You can do further processing with the response data here
+        // const response = await axios.get(url);
+        userData.value = response.data;
       } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        // Any cleanup or post-processing goes here
+        console.error("Error fetching user data:", error);
       }
     }
 
+    async function fetchData() {
+      const token = localStorage.getItem("token");
+      try {
+        const url1 = "https://dded-182-176-157-31.ngrok-free.app/api/getdata";
+        const response = await axios.get(url1, {
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "afsd",
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+
+        tableData.value = response.data;
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    async function acceptItem(itemId) {
+      const token = localStorage.getItem("token");
+      console.log(itemId.id);
+      axios.get(`https://dded-182-176-157-31.ngrok-free.app/api/share-json/${itemId.id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "afsd",
+          "Authorization": `Bearer ${token}`,
+        },
+      })
+        .then(res => {
+          console.log(res);
+        }).catch(err => {
+          console.log(err);
+        })
+      // Implement your accept logic here
+      // console.log("Accept item with ID:", itemId)
+    }
+
+    async function rejectItem(itemId) {
+      // Implement your delete logic here
+      const token = localStorage.getItem("token");
+      console.log(itemId);
+      axios.delete(`https://dded-182-176-157-31.ngrok-free.app/api/reject/${itemId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "afsd",
+          "Authorization": `Bearer ${token}`,
+        },
+      })
+        .then(res => {
+          console.log(res);
+        }).catch(err => {
+          console.log(err);
+        })
+      console.log("Reject item with ID:", itemId);
+    }
+
+    async function DeleteItem(item) {
+      // Implement your delete logic here
+      const token = localStorage.getItem("token");
+      console.log(item.id);
+      axios.delete(`https://dded-182-176-157-31.ngrok-free.app/api/delete/${item.id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "afsd",
+          "Authorization": `Bearer ${token}`,
+        },
+      })
+        .then(res => {
+          console.log(res);
+        }).catch(err => {
+          console.log(err);
+        })
+      console.log("Delete item with ID:", item.id);
+    }
     onMounted(() => {
+      fetchUserData();
       fetchData();
     });
 
     return {
-      // tableData, // Expose tableData to the template
+      userData,
+      tableData,
+      acceptItem,
+      rejectItem,
+      DeleteItem,
     };
   },
 };
 </script>
-
-<template>
-  <h1 class="text-center fw-bold" style="color: #ae62f8">Admin Dashboard</h1>
-  <div class="container mt-5">
-    <div class="table-responsive">
-      <table
-        class="table table-striped text-center table-hover shadow table-bordered"
-      >
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th colspan="3">Actions</th>
-        </tr>
-        <tr v-for="item in tableData" :key="item.id">
-          <td>{{ item.name }}</td>
-          <td>{{ item.email }}</td>
-          <td>
-            <button type="button" class="btn btn-success">Accept</button>
-          </td>
-          <td><button type="button" class="btn btn-warning">Reject</button></td>
-          <td><button type="button" class="btn btn-danger">Delete</button></td>
-        </tr>
-      </table>
-    </div>
-  </div>
-</template>
 
 <style>
 /* Import Bootstrap CSS */
