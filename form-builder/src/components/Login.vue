@@ -64,7 +64,7 @@ import { useRouter } from "vue-router";
 
 export default {
   setup() {
-    const route = useRouter();
+    const router = useRouter();
     const email = ref("");
     const password = ref("");
     const invalidLogin = ref(false);
@@ -75,7 +75,7 @@ export default {
       formData.append("password", password.value);
 
       axios
-        .post("https://010a-182-176-157-31.ngrok-free.app/api/login", formData)
+        .post("https://98e7-182-176-157-31.ngrok-free.app/api/login", formData)
         .then((response) => {
           if (response.data) {
             console.log("Login successful. Role:", response.data);

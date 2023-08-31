@@ -8,7 +8,13 @@ export default {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://010a-182-176-157-31.ngrok-free.app/api/getdata');
+        const config = {
+          headers: {
+            'Custom-Header': '*', // Replace 'YourHeaderValue' with the actual header value you want to send
+          },
+        };
+
+        const response = await axios.get('https://98e7-182-176-157-31.ngrok-free.app/api/getdata', config);
         
         // Extract and parse data from the response
         const extractedData = response.data.map(item => JSON.parse(item.data).data.user);
