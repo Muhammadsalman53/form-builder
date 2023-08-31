@@ -78,13 +78,14 @@ export default {
         .post("https://98e7-182-176-157-31.ngrok-free.app/api/login", formData)
         .then((response) => {
           if (response.data) {
-            console.log("Login successful. Role:", response.data);
+            console.log("Login successful. Role:", response.data[0]);
+            // console.log(response.data[0]);
 
             // Assuming the response contains a "role" property indicating admin or user
-            if (response.data === "admin") {
+            if (response.data[0] === "admin") {
               // Redirect to the admin dashboard
               router.push("/admin/dashboard");
-            } else if (response.data === "user") {
+            } else if (response.data[0] === "user") {
               // Redirect to the user dashboard
               router.push("/user/dashboard");
             }
