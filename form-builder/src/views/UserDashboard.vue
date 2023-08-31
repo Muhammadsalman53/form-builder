@@ -10,7 +10,7 @@ onMounted(() => {
   $('.build-wrapp').formBuilder();
 })
 
-const showFormJSON = async () => {
+const requestPublish = async () => {
   const formBuilder = $('.build-wrapp').data('formBuilder');
   console.log(formBuilder);
   if (formBuilder) {
@@ -44,10 +44,21 @@ const showFormJSON = async () => {
 </script>
 
 <template>
-  <div class="col-12" id="cForm">
+  <div class="col-12 mt-5" id="cForm">
     <div class="container">
       <div class="build-wrapp form-wrapp-div"></div>
-      <button @click="showFormJSON">Show Form JSON</button>
+      <div class="col-lg-4" id="publish-btn">
+        <button class="btn btn-success" @click="requestPublish">Publish Form</button>
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+#publish-btn{
+  margin-top: -31px;
+}
+#publish-btn button {
+    font-size: 14px;
+}
+</style>

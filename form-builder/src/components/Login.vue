@@ -75,7 +75,7 @@ export default {
       formData.append("password", password.value);
       
       axios
-      .post("https://98e7-182-176-157-31.ngrok-free.app/api/login", formData)
+      .post("https://dded-182-176-157-31.ngrok-free.app//api/login", formData)
       .then((response) => {
         if (response.data && response.data.token) {
           console.log("Login successful. Role:", response.data.role );
