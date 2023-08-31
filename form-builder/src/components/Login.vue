@@ -78,12 +78,12 @@ export default {
       .post("https://98e7-182-176-157-31.ngrok-free.app/api/login", formData)
       .then((response) => {
         if (response.data && response.data.token) {
-          console.log("Login successful. Role:", response.data[0] );
+          console.log("Login successful. Role:", response.data.role );
           // Store token in local storage
           localStorage.setItem("token", response.data.token);
-          if (response.data[0] === "admin") {
+          if (response.data.role === "admin") {
             router.push("/admin/dashboard");
-          } else if (response.data[0] === "user") {
+          } else if (response.data.role === "user") {
             router.push("/user/dashboard");
           }
         } else {
