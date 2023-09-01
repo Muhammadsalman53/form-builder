@@ -209,4 +209,4 @@ export default {
 <style>
 /* Import Bootstrap CSS */
 @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css");
-</style>push
+</style>
