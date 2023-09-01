@@ -5,6 +5,7 @@ import AdminDashboard from "../views/AdminDashboard.vue";
 import UserDashboard from "../views/UserDashboard.vue";
 import Login from '../components/Login.vue';
 import Register from '../components/Register.vue';
+import FormDisplay from '../components/FormDisplay.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +46,12 @@ const router = createRouter({
           component: UserDashboard,
         },
       ],
+    },
+    {
+      path: "/form",
+      name: "form",
+      component: FormDisplay,
+      props: true, // Pass props to the component
     },
   ],
   beforeEach: (to, from, next) => {

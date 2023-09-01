@@ -91,26 +91,48 @@ export default {
       }
     
     }
+    function acceptItem(itemId) {
+  const token = localStorage.getItem("token");
+  console.log(itemId.id);
+
+  axios.get(`https://5de9-182-176-157-31.ngrok-free.app/api/share-json/${itemId.id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "afsd",
+      "Authorization": `Bearer ${token}`,
+    },
+  })
+    .then(response => {
+      console.log(response.data);
+
+      // Open the URL in a new tab
+      window.open(response.data, "_blank");
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
 
 
-    async function acceptItem(itemId) {
-      const token = localStorage.getItem("token");
-      console.log(itemId.id);
-      axios.get(`https://5de9-182-176-157-31.ngrok-free.app/api/share-json/${itemId.id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "afsd",
-          "Authorization": `Bearer ${token}`,
-        },
-      })
-        .then(res => {
-          console.log(res.data);
-        }).catch(err => {
-          console.log(err);
-        })
-      // Implement your accept logic here
-      // console.log("Accept item with ID:", itemId)
-    }
+
+    // async function acceptItem(itemId) {
+    //   const token = localStorage.getItem("token");
+    //   console.log(itemId.id);
+    //   axios.get(`https://5de9-182-176-157-31.ngrok-free.app/api/share-json/${itemId.id}`, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "ngrok-skip-browser-warning": "afsd",
+    //       "Authorization": `Bearer ${token}`,
+    //     },
+    //   })
+    //     .then(res => {
+    //       console.log(res.data);
+    //     }).catch(err => {
+    //       console.log(err);
+    //     })
+    //   // Implement your accept logic here
+    //   // console.log("Accept item with ID:", itemId)
+    // }
 
     async function rejectItem(itemId) {
       // Implement your delete logic here
