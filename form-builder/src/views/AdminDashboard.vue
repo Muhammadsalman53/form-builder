@@ -48,7 +48,6 @@
 <script>
 import axios from "axios";
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -90,33 +89,28 @@ export default {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
+    
     }
 
-    async function acceptItem(itemId) {
-  const token = localStorage.getItem("token");
 
-  try {
-    const response = await axios.get(
-      `https://5de9-182-176-157-31.ngrok-free.app/api/share-json/${itemId}`,
-      {
+    async function acceptItem(itemId) {
+      const token = localStorage.getItem("token");
+      console.log(itemId.id);
+      axios.get(`https://5de9-182-176-157-31.ngrok-free.app/api/share-json/${itemId.id}`, {
         headers: {
           "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "afsd",
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
-      }
-    );
-
-    const jsonData = response.data; // Assuming the response contains JSON data
-
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`<pre>${JSON.stringify(jsonData, null, 2)}</pre>`);
-
-  } catch (error) {
-    console.error("Error accepting item:", error);
-  }
-}
-
+      })
+        .then(res => {
+          console.log(res.data);
+        }).catch(err => {
+          console.log(err);
+        })
+      // Implement your accept logic here
+      // console.log("Accept item with ID:", itemId)
+    }
 
     async function rejectItem(itemId) {
       // Implement your delete logic here
@@ -141,7 +135,7 @@ export default {
       // Implement your delete logic here
       const token = localStorage.getItem("token");
       console.log(item.id);
-      axios.delete(`https://dded-182-176-157-31.ngrok-free.app/api/delete/${item.id}`, {
+      axios.delete(`https://5de9-182-176-157-31.ngrok-free.app/api/delete/${item.id}`, {
         headers: {
           "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "afsd",
