@@ -48,6 +48,7 @@
 <script>
 import axios from "axios";
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -57,7 +58,7 @@ export default {
     async function fetchUserData() {
       const token = localStorage.getItem("token");
       try {
-        const url = "https://dded-182-176-157-31.ngrok-free.app/api/getuser";
+        const url = "https://5de9-182-176-157-31.ngrok-free.app/api/getuser";
         const response = await axios.get(url, {
           headers: {
             "Content-Type": "application/json",
@@ -75,7 +76,7 @@ export default {
     async function fetchData() {
       const token = localStorage.getItem("token");
       try {
-        const url1 = "https://dded-182-176-157-31.ngrok-free.app/api/getdata";
+        const url1 = "https://5de9-182-176-157-31.ngrok-free.app/api/getdata";
         const response = await axios.get(url1, {
           headers: {
             "Content-Type": "application/json",
@@ -92,29 +93,36 @@ export default {
     }
 
     async function acceptItem(itemId) {
-      const token = localStorage.getItem("token");
-      console.log(itemId.id);
-      axios.get(`https://dded-182-176-157-31.ngrok-free.app/api/share-json/${itemId.id}`, {
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await axios.get(
+      `https://5de9-182-176-157-31.ngrok-free.app/api/share-json/${itemId}`,
+      {
         headers: {
           "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "afsd",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-      })
-        .then(res => {
-          console.log(res);
-        }).catch(err => {
-          console.log(err);
-        })
-      // Implement your accept logic here
-      // console.log("Accept item with ID:", itemId)
-    }
+      }
+    );
+
+    const jsonData = response.data; // Assuming the response contains JSON data
+
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`<pre>${JSON.stringify(jsonData, null, 2)}</pre>`);
+
+  } catch (error) {
+    console.error("Error accepting item:", error);
+  }
+}
+
 
     async function rejectItem(itemId) {
       // Implement your delete logic here
       const token = localStorage.getItem("token");
       console.log(itemId);
-      axios.delete(`https://dded-182-176-157-31.ngrok-free.app/api/reject/${itemId}`, {
+      axios.delete(`https://5de9-182-176-157-31.ngrok-free.app/api/reject/${itemId}`, {
         headers: {
           "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "afsd",
