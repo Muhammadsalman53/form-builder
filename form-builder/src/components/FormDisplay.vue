@@ -1,19 +1,26 @@
 <template>
     <div>
-      <h2>HTML Form</h2>
-      <form>
-        <!-- Render the HTML form elements here based on the JSON data -->
-      </form>
+      <h2>HTML Forms</h2>
+      <!-- Render the HTML form elements here based on the JSON data array -->
+      <div v-for="(formData, index) in formDataArray" :key="index">
+        <form>
+          <div v-for="(field, fieldName) in formData" :key="fieldName">
+            <label :for="fieldName">{{ field.label }}</label>
+            <input :type="field.type" :id="fieldName" :name="fieldName" v-model="field.value" />
+            <!-- Debugging: Display the JSON data for this field -->
+            <pre>{{ field }}</pre>
+          </div>
+        </form>
+      </div>
     </div>
   </template>
   
   <script>
   export default {
-    name: 'FormDisplay',
+    name: "FormDisplay",
     props: {
-      formData: Object, // JSON data received from the URL
+      formDataArray: Array, // Array of JSON data received from the URLs
     },
-    // You can parse the JSON data and render the HTML form elements dynamically
-    // Example: Use v-for to loop through formData and generate form fields
   };
   </script>
+  

@@ -42,17 +42,24 @@
         </table>
       </div>
     </div>
+    <!-- Render FormDisplay component with JSON data -->
+    <FormDisplay :formData="formData" v-if="formData" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import { ref, onMounted } from "vue";
+import {useRouter} from 'vue-router';
+import FormDisplay from "../components/FormDisplay.vue"; 
 
 export default {
   setup() {
     const userData = ref([]);
+    const route = useRouter();
     const tableData = ref([]);
+    // Define a variable to store JSON data
+    const formDataArray = ref([]);
 
     async function fetchUserData() {
       const token = localStorage.getItem("token");
@@ -91,6 +98,7 @@ export default {
       }
     
     }
+
     function acceptItem(itemId) {
   const token = localStorage.getItem("token");
   console.log(itemId.id);
@@ -104,9 +112,15 @@ export default {
   })
     .then(response => {
       console.log(response.data);
+      console.log(itemId.data);
 
-      // Open the URL in a new tab
-      window.open(response.data, "_blank");
+      // Store the JSON data in the formData variable
+      formDataArray.value.push(itemId.data);
+      console.log(formDataArray.value)
+
+      route.push({ name: "form", params: { formDataArray: formDataArray.value } });
+      // router.push({ name: 'form', params: { formData: response.data.data } })
+      // router.push({ name: 'form', params: { formData: response.data.data } });
     })
     .catch(error => {
       console.log(error);
@@ -182,12 +196,17 @@ export default {
       acceptItem,
       rejectItem,
       DeleteItem,
+      route,
+      formDataArray,
     };
   },
+  components: {
+    FormDisplay
+  }
 };
 </script>
 
 <style>
 /* Import Bootstrap CSS */
 @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css");
-</style>
+</style>push
