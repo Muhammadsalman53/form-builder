@@ -2,19 +2,16 @@
   <div>
     <h2>HTML Forms</h2>
     <!-- Render the HTML form elements here based on the fetched JSON data -->
-    <div v-if="formDataArray.length === 0">
+    {{ formDataArray }}
+    <!-- <div v-if="formDataArray.length === 0">
       <p>Loading data...</p>
-    </div>
-    <div v-else>
+    </div> -->
+    <div>
       <form>
         <div v-for="(formData, index) in formDataArray" :key="index">
           <!-- Your dynamic form rendering code here -->
           <div v-if="formData.type === 'button'">
-            <button
-              :class="formData.className"
-              :name="formData.name"
-              :style="formData.style"
-            >
+            <button :class="formData.className" :name="formData.name" :style="formData.style">
               {{ formData.label }}
             </button>
           </div>
@@ -24,29 +21,17 @@
           <div v-else-if="formData.type === 'radio-group'">
             <label>{{ formData.label }}</label>
             <div v-for="(radioOption, optionIndex) in formData.values" :key="optionIndex">
-              <input
-                type="radio"
-                :id="radioOption.value"
-                :name="formData.name"
-                :value="radioOption.value"
-                v-model="radioOption.selected"
-              />
+              <input type="radio" :id="radioOption.value" :name="formData.name" :value="radioOption.value"
+                v-model="radioOption.selected" />
               <label :for="radioOption.value">{{ radioOption.label }}</label>
             </div>
           </div>
           <div v-else-if="formData.type === 'select'">
             <label>{{ formData.label }}</label>
-            <select
-              :class="formData.className"
-              :name="formData.name"
-              :multiple="formData.multiple"
-              v-model="formData.values"
-            >
-              <option
-                v-for="(selectOption, optionIndex) in formData.values"
-                :key="optionIndex"
-                :value="selectOption.value"
-              >
+            <select :class="formData.className" :name="formData.name" :multiple="formData.multiple"
+              v-model="formData.values">
+              <option v-for="(selectOption, optionIndex) in formData.values" :key="optionIndex"
+                :value="selectOption.value">
                 {{ selectOption.label }}
               </option>
             </select>
