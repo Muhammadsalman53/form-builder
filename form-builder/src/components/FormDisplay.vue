@@ -1,5 +1,5 @@
 <template>
-    <div class="conatiner">
+    <div class="container">
       <h2>HTML Forms</h2>
       <div v-if="formDataArray.length === 0">
         <p>Loading data...</p>
@@ -7,28 +7,28 @@
       <div v-else>
         <form>
           <div v-for="(formData, index) in formDataArray" :key="index">
-            <template v-if="formData.type === 'autocomplete'">
+            <div v-if="formData.type === 'autocomplete'">
               <label>{{ formData.label }}</label>
-              <input :type="formData.type" :required="formData.required" :name="formData.name" :style="formData.style"
-                :value="formData.value" :access="formData.access" />
-            </template>
-            <template v-if="formData.type === 'button'">
+              <input :class="formData.className" :type="formData.type" :required="formData.required" :name="formData.name" :style="formData.style"
+                :value="formData.value" :access="formData.access"/>
+            </div>
+            <div v-if="formData.type === 'button'">
               <button :class="formData.className" :name="formData.name" :style="formData.style">
                 {{ formData.label }}
               </button>
-            </template>
-            <template v-else-if="formData.type === 'header'">
-              <h1>{{ formData.label }}</h1>
-            </template>
-            <template v-else-if="formData.type === 'radio-group'">
+            </div>
+            <div v-else-if="formData.type === 'header'">
+              <h1 :class="formData.className">{{ formData.label }}</h1>
+            </div>
+            <div v-else-if="formData.type === 'radio-group'">
               <label>{{ formData.label }}</label>
               <div v-for="(radioOption, optionIndex) in formData.values" :key="optionIndex">
-                <input type="radio" :id="radioOption.value" :name="formData.name" :value="radioOption.value"
+                <input :class="formData.className" type="radio" :id="radioOption.value" :name="formData.name" :value="radioOption.value"
                   v-model="radioOption.selected" />
                 <label :for="radioOption.value">{{ radioOption.label }}</label>
               </div>
-            </template>
-            <template v-else-if="formData.type === 'select'">
+            </div>
+            <div v-else-if="formData.type === 'select'">
               <label>{{ formData.label }}</label>
               <select :class="formData.className" :name="formData.name" :multiple="formData.multiple"
                 v-model="formData.selectedValues">
@@ -37,9 +37,46 @@
                   {{ selectOption.label }}
                 </option>
               </select>
-            </template>
-            <!-- You can add more conditions for other form field types here -->
-
+            </div>
+            <div v-else-if="formData.type === 'text'">
+            <label>{{ formData.label }}</label>
+            <input :class="formData.className" :type="formData.type" :required="formData.required" :name="formData.name" :style="formData.style"
+              :value="formData.value" :access="formData.access" />
+          </div>
+          <div v-else-if="formData.type === 'email'">
+            <label>{{ formData.label }}</label>
+            <input :class="formData.className" :type="formData.type" :required="formData.required" :name="formData.name" :style="formData.style"
+              :value="formData.value" :access="formData.access" />
+          </div>
+          <div v-else-if="formData.type === 'password'">
+            <label>{{ formData.label }}</label>
+            <input :class="formData.className" :type="formData.type" :required="formData.required" :name="formData.name" :style="formData.style"
+              :value="formData.value" :access="formData.access" />
+          </div>
+          <div v-else-if="formData.type === 'textarea'">
+            <label>{{ formData.label }}</label>
+            <textarea :class="formData.className" :required="formData.required" :name="formData.name" :style="formData.style">{{ formData.value }}</textarea>
+          </div>
+          <div v-else-if="formData.type === 'number'">
+            <label>{{ formData.label }}</label>
+            <input :class="formData.className" :type="formData.type" :required="formData.required" :name="formData.name" :style="formData.style"
+              :value="formData.value" :access="formData.access" />
+          </div>
+          <div v-else-if="formData.type === 'date'">
+            <label>{{ formData.label }}</label>
+            <input :class="formData.className" :type="formData.type" :required="formData.required" :name="formData.name" :style="formData.style"
+              :value="formData.value" :access="formData.access" />
+          </div>
+          <div v-else-if="formData.type === 'file-upload'">
+            <label>{{ formData.label }}</label>
+            <input :class="formData.className" :type="formData.type" :required="formData.required" :name="formData.name" :style="formData.style"
+              :value="formData.value" :access="formData.access" />
+          </div>
+          <div v-else-if="formData.type === 'checkbox'">
+            <label>{{ formData.label }}</label>
+            <input :class="formData.className" :type="formData.type" :required="formData.required" :name="formData.name" :style="formData.style"
+              :value="formData.value" :access="formData.access" v-model="formData.checked" />
+          </div>
           </div>
         </form>
       </div>
